@@ -975,10 +975,6 @@ export default {
 
   .imagesList {
     position: relative;
-
-    .upload-demo-list {
-    }
-
     .el-form-item__content {
       .upload-demo-list {
         white-space: nowrap;
