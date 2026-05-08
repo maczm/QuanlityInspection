@@ -291,7 +291,6 @@ export default {
 
   watch: {
     dataObj() {
-      console.log(this.dataObj);
       if (
         this.WorkStationData.OrderStatus == 14 ||
         this.WorkStationData.OrderStatus == 8
@@ -337,10 +336,7 @@ export default {
       } else {
         this.DefectCodeList.push("");
       }
-      console.log(this.dataObj.TestReasonCode);
-      console.log(this.DefectCodeList);
-
-      this.fileList = [];
+this.fileList = [];
       this.imgfileList = [];
       let PicPath = this.dataObj.PicPath;
       if (PicPath) {
@@ -365,8 +361,7 @@ export default {
     },
   },
   mounted() {
-    console.log(this.WorkStationData);
-    this.heightNumer = document.querySelector(".table-name").offsetHeight;
+    this.heightNumer =document.querySelector(".table-name").offsetHeight;
     this.formLabelAlign.Characteristic = this.dataObj.Characteristic;
     this.formLabelAlign.CharacteristicText = this.dataObj.CharacteristicText;
     this.formLabelAlign.TestAttribute = this.dataObj.TestAttribute;
@@ -487,21 +482,18 @@ export default {
       // 从相册中选择多张图片
       // 从相册中选择图片
       try {
-        console.log("从相册中选择多张图片:");
         // eslint-disable-next-line no-undef
         plus.gallery.pick(
-          function (e) {
-            for (var i in e.files) {
-              console.log(e.files[i]);
-            }
+          function () {
+            // 选择完成
           },
-          function (e) {
-            console.log("取消选择图片", e);
+          function () {
+            // 取消选择
           },
           { filter: "image", multiple: true, maximum: 10, system: false },
         ); // 最多选择3张图片
       } catch (error) {
-        console.log(error);
+        console.error("相册选择失败:", error);
       }
     },
 
@@ -560,38 +552,6 @@ export default {
       //}
       return isimg;
     },
-    //async loadImagesSequentially(imageSources) {
-    //   ;
-    //    for (const src of imageSources) {
-    //        try {
-    //            const result = await this.loadImage(src);
-    //            const results = []
-    //            results.push(result);
-    //            let obj = {};
-    //            obj.url = results;
-    //            obj.id = this.formLabelAlign.ID;
-    //            obj.FilePicker = results;
-    //            window.saveImgFils(obj, (data) => {
-    //                if (data.code != 0) {
-    //                    this.$message.error(data.msg);
-    //                    return
-    //                }
-    //                this.imgLoading=false;
-    //                console.log("tupian", data.data)
-    //                this.imgfileList = this.imgfileList.concat(data.data)
-    //                this.fileList = this.fileList.concat(data.data.ReturnUrl)
-    //                this.formLabelAlign.imgfileList = this.imgfileList.join(',');
-    //            })
-    //            console.log(`Loaded image: ${result}`);
-    //        } catch (error) {
-    //            console.error('Error loading image:', error);
-    //        }
-    //
-    //    }
-    //
-    //    console.log('All images loaded:', results);
-    //    // 这里可以进行同步输出
-    //},
 
     //--------------
     async loadImagesSequentially(imageSources) {
@@ -629,12 +589,9 @@ export default {
               continue;
             }
             // 处理返回的数据
-            //this.imgLoading = false;
-            console.log("tupian", data.data);
             this.imgfileList = this.imgfileList.concat(data.data);
             this.fileList = this.fileList.concat(data.data.ReturnUrl);
             this.formLabelAlign.imgfileList = this.imgfileList.join(",");
-            console.log(`Loaded image: ${result}`);
           }
         } catch (error) {
           console.error("Error loading or saving image:", error);
@@ -657,11 +614,7 @@ export default {
 
       this.imgLoading = true;
 
-      let imglength = 0;
-
-      imglength = fileList.length + this.imgfileList.length;
-      console.log("imglength", imglength);
-      // if (imglength > 10) {
+      // if (fileList.length + this.imgfileList.length > 10) {
       //     this.shebeiimgExceed()
       //     return
       // }
@@ -671,7 +624,6 @@ export default {
       for (let i = 0; i < fileList.length; i++) {
         fileListUrlData.push(fileList[i]);
       }
-      console.log(fileListUrlData);
       this.loadImagesSequentially(fileListUrlData);
     },
 
@@ -681,7 +633,6 @@ export default {
       input.click();
     },
     httpRequest(file) {
-      console.log(file, "----------->");
       file.url = URL.createObjectURL(file.raw);
       file.id = this.formLabelAlign.ID;
       window.saveImgFils(file, (data) => {
@@ -786,8 +737,6 @@ export default {
                 isLastOneFleg = false;
               }
             }
-
-            console.log(isLastOneFleg);
 
             let PicPath = [];
             this.imgfileList.map((item) => {

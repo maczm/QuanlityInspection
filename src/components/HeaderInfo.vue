@@ -266,7 +266,6 @@ export default {
   },
   mounted() {
     this.isApp = this.isAppEnvironment();
-    console.log(this.isApp);
     this.formLabelAlign.WipOrderNo = this.stationData.WipOrderNo;
     this.formLabelAlign.MonthSequence = this.stationData.MonthSequence;
     this.formLabelAlign.Vin = this.stationData.Vin;
@@ -281,7 +280,11 @@ export default {
     },
 
     seach(name) {
-      console.log("搜索", this.formLabelAlign);
+      console.log("HeaderInfo: 搜索条件", {
+        WipOrderNo: this.formLabelAlign.WipOrderNo,
+        MonthSequence: this.formLabelAlign.MonthSequence,
+        Vin: this.formLabelAlign.Vin,
+      });
       let obj = {};
       if (!this.selectStationData.wrokStation) {
         this.$message.error("请选择工位号再搜索");

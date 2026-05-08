@@ -330,10 +330,6 @@ export default {
     formLabelAlign: {
       handler(data) {
         if (data.TestValue === 0 || data.TestValue) {
-          console.log(
-            data.LowerControlLimit <= data.TestValue &&
-              data.UpperControlLimit >= data.TestValue,
-          );
           if (
             data.LowerControlLimit <= data.TestValue &&
             data.UpperControlLimit >= data.TestValue
@@ -497,7 +493,6 @@ export default {
     }
 
     this.formLabelAlign.imgfileList = this.imgfileList.join(",");
-    console.log(this.formLabelAlign);
   },
   methods: {
     handleClick(onOff) {
@@ -614,12 +609,9 @@ export default {
                 continue;
               }
               // 处理返回的数据
-              //this.imgLoading = false;
-              console.log("tupian", data.data);
               this.imgfileList = this.imgfileList.concat(data.data);
               this.fileList = this.fileList.concat(data.data.ReturnUrl);
               this.formLabelAlign.imgfileList = this.imgfileList.join(",");
-              console.log(`Loaded image: ${result}`);
             }
           } catch (error) {
             console.error("Error loading or saving image:", error);
@@ -639,10 +631,7 @@ export default {
       }, 100);
       const fileList = event.target.files;
 
-      let imglength = 0;
-      imglength = fileList.length + this.imgfileList.length;
-      console.log("imglength", imglength);
-      // if (imglength > 10) {
+      // if (fileList.length + this.imgfileList.length > 10) {
       //     this.shebeiimgExceed()
       //     return
       // }
@@ -676,34 +665,6 @@ export default {
       //}
       return isimg;
     },
-    // handleFileChange(event) {
-    //     const fileList = event.target.files;
-    //     let fileListData = [];
-    //     let fileListUrlData = [];
-    //     for (let i = 0; i < fileList.length; i++) {
-    //         fileListUrlData.push(URL.createObjectURL(fileList[i]))
-    //         const reader = new FileReader();
-    //         reader.readAsDataURL(fileList[i]);
-    //         reader.onload = (e) => {
-    //             const base64String = e.target.result;
-    //             fileListData.push(base64String)
-    //         }
-    //     }
-    //     let obj = {};
-    //     obj.url = fileListUrlData;
-    //     obj.id = this.formLabelAlign.ID;
-    //     obj.FilePicker = fileListData;
-    //     window.saveImgFils(obj, (data) => {
-    //         if (data.code) {
-    //             this.$message.error(data.msg);
-    //             return
-    //         }
-    //         console.log("tupian", data.data)
-    //         this.imgfileList = this.imgfileList.concat(data.data);
-    //         this.formLabelAlign.imgfileList = this.imgfileList.join(',');
-    //     })
-
-    // },
     openGallery() {
       // 打开相册逻辑（通常通过文件输入实现）
       const input = document.querySelector('input[type="file"]');

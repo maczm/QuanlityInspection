@@ -142,7 +142,7 @@ export default {
       }
     },
     handleFileInput(file) {
-      console.log("                file", file);
+      // 文件输入处理
     },
     handleUpload(file, key, count) {
       const upload2 = (_key, _file) => {

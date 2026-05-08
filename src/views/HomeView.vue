@@ -172,9 +172,7 @@ export default {
     };
   },
   watch: {
-    dataListIndex() {
-      console.log(this.dataList[this.dataListIndex]);
-    },
+    dataListIndex() {},
   },
   mounted() {
     if (localStorage.getItem("formLabelAlignStation")) {
@@ -194,7 +192,6 @@ export default {
           this.$refs.specialConfiguration.offsetHeight -
           40 -
           0;
-        console.log(this.contentHeightNumer);
       });
     },
     showSpecialConfigurationFun() {
@@ -202,7 +199,12 @@ export default {
       this.setHeight();
     },
     updateStationFun(data) {
-      console.log("工位信息", data);
+      console.log("HomeView: 工位切换", {
+        FacilityName: data.FacilityName,
+        ProductionLineNo: data.ProductionLineNo,
+        WorkStation: data.wrokStation,
+        WorkStationDesc: data.wrokStationDesc,
+      });
       this.selectStationData = data;
       this.WorkStationData = {};
       this.dataList = [];
@@ -220,11 +222,9 @@ export default {
       let mindataListIndex = 0;
       let maxdataListIndex = 0;
       this.dataList.map((item, index) => {
-        console.log(item);
         if (item.Status != 8 && item.Status != 14) {
           this.minIndex++;
 
-          console.log(index, item.Status);
           this.notFinished++;
 
           if (!maxlistNum && this.dataListIndex < index) {
@@ -250,12 +250,10 @@ export default {
     },
     getSelectionListFun() {
       window.getSelectionList((data) => {
-        console.log(data);
         this.selectionData = data;
       });
     },
     SearchDateFun(valueObj) {
-      console.log(this.selectStationData);
       this.getData({
         ...valueObj,
         WorkStation: this.selectStationData.wrokStation,
@@ -265,11 +263,9 @@ export default {
       //获取工位检测数据列表
       this.setHeight();
       this.loadingData = true;
-      console.log(this.one);
 
       this.count = 0;
       window.WorkStationFunc(valueObj, (data) => {
-        console.log(data);
         this.loadingData = false;
 
         if (data.code == 0) {
@@ -283,11 +279,9 @@ export default {
           });
           let listNum = false;
           dataList.map((item, index) => {
-            console.log(item);
             item.index = index;
             if (item.Status != 8 && item.Status != 14) {
               this.notFinished++;
-              console.log(index, item.Status);
               if (!listNum) {
                 this.dataListIndex = index;
                 listNum = true;
@@ -295,14 +289,19 @@ export default {
             }
           });
           this.dataList = dataList;
+          console.log("HomeView: 检验数据加载完成", {
+            工位: data.WorkStation,
+            订单号: data.WipOrderNo,
+            检验项总数: dataList.length,
+            未完成: this.notFinished,
+            已完成: dataList.length - this.notFinished,
+          });
         } else {
           this.$message.error(data.msg);
         }
-        console.log("未完成", this.notFinished);
       });
     },
     PartialModificationDataFun(newData) {
-      console.log(newData, this.dataList[this.dataListIndex]);
       this.dataList[this.dataListIndex].TestAttribute = newData.TestAttribute;
       this.dataList[this.dataListIndex].Status = newData.Status;
       this.dataList[this.dataListIndex].TestValue = newData.TestValue;
@@ -347,7 +346,6 @@ export default {
       let list = this.dataList.filter((item) => {
         return !item.TestAttribute;
       });
-      console.log(list);
       callback(list);
     },
     sortedList(list) {

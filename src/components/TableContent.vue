@@ -100,7 +100,6 @@ export default {
   },
   methods: {
     filterTag(value, row) {
-      console.log(row, value);
       if (value == 0) {
         return !(row.Status == 8 || row.Status == 14);
       }
@@ -109,7 +108,6 @@ export default {
     },
     btn() {
       this.heightNumer = document.querySelector(".table-name").offsetHeight;
-      console.log(document.querySelector(".table-name"));
       this.$nextTick(() => {
         this.$refs.singleTable.doLayout();
       });

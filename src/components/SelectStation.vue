@@ -122,7 +122,6 @@ export default {
       this.dialogFalg = true;
     },
     closeClick() {
-      console.log(this.formLabelAlign);
       this.dialogFalg = false;
     },
     submitForm() {
